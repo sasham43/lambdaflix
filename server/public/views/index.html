@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="movieApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Movie Collection</title>
+
+    <!-- Libraries -->
+    <script src="vendor/angular/angular.min.js"></script>
+
+    <!-- My development -->
+    <script src="assets/scripts/client.min.js"></script>
+    <link rel="stylesheet" href="assets/style/style.css" />
+
+  </head>
+  <body ng-controller="MovieController">
+    <h1>Movie Collection</h1>
+    <form>
+      <h2>Add Movies</h2>
+      Title: <input type="text" ng-model="inputMovie.title" />
+      Year: <input type="number" ng-model="inputMovie.year" />
+      <input type="submit" ng-click="getMovieInfo()" value="Search" />
+    </form>
+
+    <div class="omdbContainer" ng-show="newMovie">
+      <img ng-src="{{newMovie.Poster}}" ng-alt="{{newMovie.Title}} poster" />
+      <p>
+        Title: <span>{{newMovie.Title}}</span>
+      </p>
+      <p>
+        Year: <span>{{newMovie.Year}}</span>
+      </p>
+
+      <button ng-click="saveMovie()">Save</button>
+    </div>
+    <div class="movieCollection">
+      <h2>Collection</h2>
+      <div ng-repeat="movie in movies">
+        <img ng-src="{{movie.poster}}" ng-alt="{{movie.title}} poster" />
+        <p>
+          Title: <span>{{movie.title}}</span>
+        </p>
+        <p>
+          Year: <span>{{movie.year}}</span>
+        </p>
+        <p>
+          Plot: <span>{{movie.plot}}</span>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
