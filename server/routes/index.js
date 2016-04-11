@@ -11,15 +11,24 @@ var Movie = mongoose.model('Movie', {title:String, year:Number, netflixAvailable
 router.get('/', function(req, res){
   // res.send('Router is routing');
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
-  console.log('GET request \'/\' received');
+  // console.log('GET request \'/\' received');
 });
 
 router.post('/save', function(req, res){
-  console.log('Save movie POST request received');
-  var newMovie = new Movie({title: req.body.Title, year: req.body.Year, poster: req.body.Poster, plot: req.body.Plot});
-  newMovie.save(function(){
-    res.send(newMovie.toJSON());
-  })
+  // check if movie already exists in database
+  Movie.find({title: req.body.Title}).exec(function(err, movies){
+    // console.log('movies already in database:', movies);
+    if(movies == false){
+      // console.log('post request:', req.body);
+      var newMovie = new Movie({title: req.body.Title, year: req.body.Year, poster: req.body.Poster, plot: req.body.Plot, netflixAvailable: req.body.netflixAvailable});
+      console.log('Saving movie: ', newMovie);
+      newMovie.save(function(){
+        res.send(newMovie.toJSON());
+      });
+    } else {
+      console.log('This movie has already been saved.');
+    }
+  });
 });
 
 router.get('/movies', function(req, res){

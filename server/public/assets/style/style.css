@@ -1,3 +1,43 @@
 body{
   background-color: tomato;
 }
+
+button{
+  margin: 0 0 1em 0;
+}
+
+h1{
+  height: 1em;
+}
+
+.addMovies{
+  /*position: absolute;*/
+  font-size: 20px;
+  /*height: 90%;*/
+}
+
+.movieCollection{
+  /*position: absolute;*/
+  height: 90%;
+}
+
+.omdbPoster{
+  margin: 0 auto;
+}
+
+.submitButton{
+  margin: 1em 0 1em 0;
+}
+
+div .row.movie:hover{
+  background-color: #ffa547;
+}
+
+.netflixIcon {
+  width: 1em;
+  height: 1em;
+}
+
+.pre-scrollable{
+  max-height: 48em;
+}

@@ -2,10 +2,11 @@
 <html lang="en" ng-app="movieApp">
   <head>
     <meta charset="utf-8">
-    <title>Movie Collection</title>
+    <title>Lambdaflix</title>
 
     <!-- Libraries -->
     <script src="vendor/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css" />
 
     <!-- My development -->
     <script src="assets/scripts/client.min.js"></script>
@@ -13,38 +14,47 @@
 
   </head>
   <body ng-controller="MovieController">
-    <h1>Movie Collection</h1>
-    <form>
-      <h2>Add Movies</h2>
-      Title: <input type="text" ng-model="inputMovie.title" />
-      Year: <input type="number" ng-model="inputMovie.year" />
-      <input type="submit" ng-click="getMovieInfo()" value="Search" />
-    </form>
+    <h1 class="text-center">Lambdaflix</h1>
 
-    <div class="omdbContainer" ng-show="newMovie">
-      <img ng-src="{{newMovie.Poster}}" ng-alt="{{newMovie.Title}} poster" />
-      <p>
-        Title: <span>{{newMovie.Title}}</span>
-      </p>
-      <p>
-        Year: <span>{{newMovie.Year}}</span>
-      </p>
+    <div class="addMovies col-md-6 col-lg-6">
+      <form>
+        <h2 class="text-center">Add Movies</h2>
+        <span class="col-md-6 text-center"><input type="text" ng-model="inputMovie.title" placeholder="Title"/></span>
+        <span class="col-md-6 text-center"><input type="number" ng-model="inputMovie.year" placeholder="Year" /></span>
+        <input type="submit" class="col-md-12 col-log-12 submitButton" ng-click="getMovieInfo()" value="Search" />
+      </form>
 
-      <button ng-click="saveMovie()">Save</button>
+      <div class="omdbContainer text-center" ng-show="newMovie">
+        <img class="img-responsive omdbPoster" ng-src="{{newMovie.Poster}}" ng-alt="{{newMovie.Title}} poster" />
+        <p>
+          Title: <span>{{newMovie.Title}}</span>
+        </p>
+        <p>
+          Year: <span>{{newMovie.Year}}</span>
+        </p>
+
+        <button class="col-md-12 col-log-12" ng-click="saveMovie()">Save</button>
+      </div>
     </div>
-    <div class="movieCollection">
-      <h2>Collection</h2>
-      <div ng-repeat="movie in movies">
-        <img ng-src="{{movie.poster}}" ng-alt="{{movie.title}} poster" />
-        <p>
-          Title: <span>{{movie.title}}</span>
-        </p>
-        <p>
-          Year: <span>{{movie.year}}</span>
-        </p>
-        <p>
-          Plot: <span>{{movie.plot}}</span>
-        </p>
+
+    <h2 class="text-center">Collection</h2>
+    <div class="movieCollection col-md-6 col-lg-6 pre-scrollable">
+
+      <div class="movie row" ng-repeat="movie in movies">
+        <img class="col-md-4 col-lg-4" ng-src="{{movie.poster}}" ng-alt="{{movie.title}} poster" />
+        <div class="col-md-8 col-lg-8">
+          <p>
+            Title: <span>{{movie.title}}</span>
+          </p>
+          <p>
+            Year: <span>{{movie.year}}</span>
+          </p>
+          <p>
+            Plot: <span>{{movie.plot}}</span>
+          </p>
+          <img class="netflixIcon" src="assets/images/netflix_icon.png" ng-show="movie.netflixAvailable" />
+        </div>
+
       </div>
     </div>
   </body>
