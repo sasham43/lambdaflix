@@ -1,20 +1,49 @@
 var app = angular.module('movieApp', []);
 
-app.controller('MovieController', ['$scope', '$http', function($scope, $http){
+var imageLoaded = false;
+
+app.directive('imageonload', function(){
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+            element.bind('load', function() {
+                // alert('image is loaded');
+                imageLoaded = true;
+                console.log('image loaded');
+            });
+        }
+  };
+});
+
+app.controller('MovieController', ['$scope', '$http', '$interval', function($scope, $http, $interval){
   $scope.inputMovie = {};
 
   $scope.getMovieInfo = function(){
     // console.log($scope.movie);
+    $scope.showLoader = true;
+    $scope.showImage = false;
     $scope.movieUrl = 'http://omdbapi.com/?t=' + $scope.inputMovie.title + '&y=' + $scope.inputMovie.year + '&plot=short&r=json';
 
     $http.get($scope.movieUrl).then(function(response){
       $scope.newMovie = {};
       $scope.newMovie = response.data;
       // console.log($scope.newMovie);
+      $scope.waitForLoad();
       response = '';
       $scope.movie = {};
     });
   };
+
+  $scope.waitForLoad = function(){
+    var waiting = $interval(function(){
+      if(imageLoaded){
+        $scope.showLoader = false;
+        $scope.showImage = true;
+        imageLoaded = false;
+        return;
+      }
+    }, 100);
+  }
 
   $scope.saveMovie = function(){
     console.log('POST newMovie', $scope.newMovie);
