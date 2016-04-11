@@ -23,8 +23,8 @@
         <span class="col-md-6 text-center"><input type="number" ng-model="inputMovie.year" placeholder="Year" /></span>
         <input type="submit" class="col-md-12 col-log-12 submitButton" ng-click="getMovieInfo()" value="Search" />
       </form>
-      
-      <img src="ajax-loader.gif" ng-show="showLoader" />
+
+      <img class="loadingIcon img-responsive" src="/assets/images/ajax-loader.gif" ng-show="showLoader" />
       <div class="omdbContainer text-center" ng-show="showImage">
 
         <img class="img-responsive omdbPoster" ng-src="{{newMovie.Poster}}" ng-alt="{{newMovie.Title}} poster" imageonload/>
@@ -54,7 +54,7 @@
           <p>
             Plot: <span>{{movie.plot}}</span>
           </p>
-          <img class="netflixIcon" src="assets/images/netflix_icon.png" ng-show="movie.netflixAvailable" />
+          <a ng-href="{{movie.netflixUrl}}" target="_blank"><img class="netflixIcon" src="assets/images/netflix_icon.png" ng-show="movie.netflixAvailable" /></a>
         </div>
 
       </div>

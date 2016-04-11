@@ -6,7 +6,7 @@ var router = express.Router();
 
 mongoose.connect('mongodb://localhost/running_skeleton');
 
-var Movie = mongoose.model('Movie', {title:String, year:Number, netflixAvailable:Boolean, poster:String, plot:String});
+var Movie = mongoose.model('Movie', {title:String, year:Number, netflixAvailable:Boolean, netflixUrl: String, poster:String, plot:String});
 
 router.get('/', function(req, res){
   // res.send('Router is routing');
@@ -20,7 +20,7 @@ router.post('/save', function(req, res){
     // console.log('movies already in database:', movies);
     if(movies == false){
       // console.log('post request:', req.body);
-      var newMovie = new Movie({title: req.body.Title, year: req.body.Year, poster: req.body.Poster, plot: req.body.Plot, netflixAvailable: req.body.netflixAvailable});
+      var newMovie = new Movie({title: req.body.Title, year: req.body.Year, poster: req.body.Poster, plot: req.body.Plot, netflixAvailable: req.body.netflixAvailable, netflixUrl: req.body.netflixUrl});
       console.log('Saving movie: ', newMovie);
       newMovie.save(function(){
         res.send(newMovie.toJSON());

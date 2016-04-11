@@ -41,3 +41,7 @@ div .row.movie:hover{
 .pre-scrollable{
   max-height: 48em;
 }
+
+.loadingIcon{
+  margin: 0 auto;
+}

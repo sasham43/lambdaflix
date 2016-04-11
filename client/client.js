@@ -25,12 +25,18 @@ app.controller('MovieController', ['$scope', '$http', '$interval', function($sco
     $scope.movieUrl = 'http://omdbapi.com/?t=' + $scope.inputMovie.title + '&y=' + $scope.inputMovie.year + '&plot=short&r=json';
 
     $http.get($scope.movieUrl).then(function(response){
-      $scope.newMovie = {};
-      $scope.newMovie = response.data;
-      // console.log($scope.newMovie);
-      $scope.waitForLoad();
-      response = '';
-      $scope.movie = {};
+      if(!response.data.Error){
+        $scope.newMovie = {};
+        $scope.newMovie = response.data;
+        // console.log('client.js get OMDB response', response);
+        $scope.waitForLoad();
+        response = '';
+        $scope.movie = {};
+      } else {
+        alert("The request failed and you should feel bad!");
+        $scope.showLoader = false;
+      }
+
     });
   };
 
@@ -52,33 +58,16 @@ app.controller('MovieController', ['$scope', '$http', '$interval', function($sco
 
     $http.get(netflixUrl).then(function(response){
       console.log('Netflix response:', response);
-      if(response.status == 200){
-        // console.log('netflix available made true');
-        $scope.newMovie.netflixAvailable = true;
-        // console.log($scope.newMovie);
-      }
+      $scope.newMovie.netflixAvailable = true;
+      $scope.newMovie.netflixUrl = 'http://netflix.com/watch/' + response.data.show_id;
       var netflixed = $scope.newMovie;
-      console.log('$scope.newMovie.netflixAvailable', $scope.newMovie.netflixAvailable)
-      console.log('netflixed:', netflixed);
       $http.post('/save', netflixed).then(function(response){
-        if(response.status !== 200){
-          // console.log('Error');
-        } else {
-          // console.log(response);
-          // console.log('Movie saved');
-        }
         $scope.getMovieCollection();
       });
     }, function (response){
       console.log('netflix available made false');
       $scope.newMovie.netflixAvailable = false;
       $http.post('/save', $scope.newMovie).then(function(response){
-        if(response.status !== 200){
-          // console.log('Error');
-        } else {
-          // console.log(response);
-          // console.log('Movie saved');
-        }
         $scope.getMovieCollection();
       });
     });
